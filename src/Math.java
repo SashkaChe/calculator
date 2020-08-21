@@ -59,25 +59,69 @@ switch (formula.get(i)) {
 
         // удаляем мусор из листа
         polka.removeAll(Arrays.asList("", null));
-        System.out.println(polka.size());
 
         // получаем значение выражения на основе обартной польской записи
-        double x = Double.parseDouble(polka.get(0));
-        double y = 0;
+        ArrayList<Double> num = new ArrayList<>();
 
-        for(int i = 1; i < polka.size(); i++) {
+        for(int i = 0; i < polka.size();) {
 
             switch (polka.get(i)) {
 
-                case "*": x = x * y; break;
-                case "/": x = x / y; break;
-                case "+": x = x + y; break;
-                case "-": x = x - y; break;
+                case "*":
 
-                default: y = Double.parseDouble(polka.get(i));
+                    Double y = num.get(num.size()-2) * num.get(num.size()-1);
+
+                    num.set(num.size()-2, y);
+                    num.remove(num.size()-1);
+                    polka.remove(polka.get(i));
+                    i = 0;
+
+                    break;
+
+                case "/":
+
+
+                    Double s = num.get(num.size()-2) / num.get(num.size()-1);
+
+                    num.set(num.size()-2, s);
+                    num.remove(num.size()-1);
+                    polka.remove(polka.get(i));
+
+
+                    break;
+
+
+                case "+":
+
+                    Double z = num.get(num.size()-2) + num.get(num.size()-1);
+
+                    num.set(num.size()-2, z);
+                    num.remove(num.size()-1);
+                    polka.remove(polka.get(i));
+
+
+                    break;
+
+                case "-":
+
+                    Double d = num.get(num.size()-2) - num.get(num.size()-1);
+
+                    num.set(num.size()-2, d);
+                    num.remove(num.size()-1);
+                    polka.remove(polka.get(i));
+
+
+                    break;
+
+                default:
+
+                    num.add(Double.parseDouble(polka.get(i)));
+                    polka.remove(polka.get(i));
+
+
             }
         }
-        System.out.println(x);
+        System.out.print(num.get(0));
 
     }
 
